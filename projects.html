@@ -1,0 +1,169 @@
+---
+title: Projects
+permalink: "/projects"
+layout: page
+---
+
+
+<section id="projects">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Projects</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row" id="showProjects">
+      <div class="col-3">
+        <a class="waves-effect" data-toggle="modal" data-target="#newProjectModal">
+        <div class="card card-image">
+            <div class="text-white text-center d-flex align-items-center py-5 px-4">
+                <div>
+                    <h5 class="pink-text"><i class="fas fa-plus"></i></h5>
+                    <h3 class="card-title pt-2"><strong>Add New Project</strong></h3>
+                </div>
+            </div>
+        </div>
+      </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- new project modal -->
+<div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">New Project</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <input type="text" id="newProjectName" class="form-control">
+                    <label for="newProjectName">Project Name</label>
+                </div>
+                <div class="md-form mb-4">
+                  <textarea type="text" id="newProjectDescription" class="form-control md-textarea" rows="3"></textarea>
+                  <label for="newProjectDescription">Project Description</label>
+                </div>
+                <button class="btn btn-default" id="newProjectCreate">Create</button>
+              </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- modal end -->
+<script>
+$(document).ready(function initApp() {
+  // Listening for auth state changes.
+  // [START authstatelistener]
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    // [START_EXCLUDE silent]
+
+    // [END_EXCLUDE]
+    if (user) {
+      // User is signed in.
+      var displayName = user.displayName;
+      var email = user.email;
+      var emailVerified = user.emailVerified;
+      var photoURL = user.photoURL;
+      var isAnonymous = user.isAnonymous;
+      var uid = user.uid;
+      var providerData = user.providerData;
+      $(function showProjects() {
+        var userID = user.uid;
+        var url = ("https://user-journals.firebaseio.com/users/" + uid + ".json");
+        var projectsData = $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'json',
+          data: {param1: 'value1'}
+        })
+        .done(function() {
+          var projectObj = projectsData.responseJSON;
+
+          enumerate(projectObj.projects);
+
+          });
+
+          function enumerate(o){
+            var projectId = '';
+            var projectName = '';
+            var projectDescription = '';
+              //iterate across o, passing keys as k and values as v
+              $.each(o, function(k,v){
+
+                  //if v has nested depth
+                  if(typeof v == "object"){
+                    //write the key to the console
+                    projectId = k;
+                    //recursively call enumerate on the nested properties
+                    $.each(v, function(l, w) {
+                      if (l == "ProjectName") {
+                        //log the key & value
+                        projectName = String(w);
+                      } else if (l == "ProjectDescription") {
+                        projectDescription = String(w);
+                      }
+                    })
+                  }
+
+                  $("#showProjects").prepend(
+                    '<div class="col-3"><a class="projectLink id="' + projectId + '" waves-effect"><div id="projectLink"></div><div class="card card-image"><div class="text-white text-center d-flex align-items-center py-5 px-4"><div><h3 class="card-title pt-2"><strong>' + projectName + '</strong></h3><h5 class="pink-text">' + projectDescription + '</h5></div></div></div></a></div>');
+                  })
+                }
+              })
+
+
+
+      $("#newProjectCreate").click(function() {
+        event.preventDefault();
+          var newProjectUrl = ("https://user-journals.firebaseio.com/users/" + uid + "/projects.json");
+          var newProjectName = $("#newProjectName").val();
+          var newProjectDescription = $("#newProjectDescription").val();
+          var newProjectDateCreate = new Date();
+          var newProjectFull = {
+            "ProjectName": newProjectName,
+            "ProjectDescription": newProjectDescription,
+            "DateCreate": newProjectDateCreate,
+            "DateClose": ""
+          }
+          $.ajax({
+            url: newProjectUrl,
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(newProjectFull)
+          })
+          .done(function() {
+            console.log("success");
+            showProjects();
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+
+      });
+      if (!emailVerified) {
+        console.log(uid);
+      }
+      // [END_EXCLUDE]
+    } else {
+      // User is signed out.
+      // [START_EXCLUDE]
+
+      // [END_EXCLUDE]
+    }
+    // [START_EXCLUDE silent]
+    // [END_EXCLUDE]
+  })
+});
+</script>
