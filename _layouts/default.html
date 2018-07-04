@@ -3,9 +3,27 @@
   <head>
 
     {% include head.html %}
-
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
   </head>
   <body>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-database.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBL2hSVvIK2hCGAaSlGpyNzbCBNk8N9eV0",
+        authDomain: "user-journals.firebaseapp.com",
+        databaseURL: "https://user-journals.firebaseio.com",
+        projectId: "user-journals",
+        storageBucket: "user-journals.appspot.com",
+        messagingSenderId: "1025657546988"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+
     {% include header.html %}
 
 
@@ -22,8 +40,10 @@
 
 
 
+    {% include footer.html %}
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
     <script src="{{ site.github.url }}/scripts/jquery.cookie.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ site.github.url }}/scripts/scripts.js"></script>
