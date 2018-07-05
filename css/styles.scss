@@ -7,6 +7,7 @@ $special-color-dark: #263238;
 $special-color: #37474F;
 $unique-color: #3F729B;
 
+
 body {
   padding-top: 86px;
 }
@@ -16,6 +17,9 @@ a {
 #exampleSection {
   margin-top: 50px;
 }
+
+
+
 #siginSection, #projects {
   margin-top: 40px;
 }
@@ -56,6 +60,7 @@ a {
   min-height: 255px;
   min-width: 255px;
   background-color: #4C4C4C;
+
 }
 .sectionHeader .card-image {
   background-size: cover;
@@ -87,3 +92,4 @@ tbody {
   border-top: 3px solid $brand-main;
   background-color: white;
 }
+
