@@ -49,11 +49,19 @@
               <a class="nav-link" href="#">Home</a>
           </li>
           <li class="nav-item">
+              <a class="nav-link" href="/how-to">How To</a>
+          </li>
+          <li class="nav-item">
               <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/contact">Contact</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
+          <li class="nav-item"><a class="btn btn-outline-white btn-rounded" href="/login"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
+            <!-- <li class="nav-item dropdown">
+
                 <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user"></i> Profile </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
@@ -61,7 +69,7 @@
                     <a class="dropdown-item waves-effect waves-light" href="#">My account</a>
                     <button class="dropdown-item waves-effect waves-light" id="headerSignOut">Log out</button>
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
 </nav>
@@ -70,239 +78,102 @@
 
 
 
-    <section id="siginSection">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-5">
-				<section class="form-elegant">
+    <section class="sectionHeader brand-main" id="aboutHeader">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
 
-					<!--Form without header-->
-					<div class="card">
+                <div class="text-white text-center py-5 px-4 my-5">
+                    <div>
+                      <img src="/img/logo-white.svg" width="100" height="100">
+                      <h1 class="card-title pt-3 mb-5 font-bold"><strong>User Journals</strong></h1>
+                      <h4 class="mx-5 mb-5">Create better User Stories with the Journal method.</h4>
+                      <a class="btn btn-outline-white btn-rounded" href="/login"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+                    </div>
+                </div>
 
-						<div class="card-body">
-
-							<!--Header-->
-							<div class="text-center">
-								<img src="/img/logo-main.svg" width="100" height="100">
-								<h3 class="dark-grey-text mb-5"><strong>Sign in</strong></h3>
-							</div>
-
-							<!--Body-->
-							<div class="md-form">
-								<input class="form-control" type="text" id="email" name="email" />
-								<label for="email">Your email</label>
-							</div>
-							<div class="alert alert-warning alert-dismissible fade show" role="alert" id="signinEmailAlert">
-							  <strong>Please enter an email address.</strong>
-							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							    <span aria-hidden="true">&times;</span>
-							  </button>
-							</div>
-							<div class="md-form pb-3">
-								<input class="form-control" type="password" id="password" name="password" />
-								<label for="password">Your password</label>
-								<a class="font-small blue-text d-flex justify-content-end ml-1" id="quickstart-password-reset" name="verify-email">Forgot Password?</a>
-							</div>
-							<div class="alert alert-warning alert-dismissible fade show" role="alert" id="signinPasswordAlert1">
-							  <strong>Please enter your password.</strong>
-							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							    <span aria-hidden="true">&times;</span>
-							  </button>
-							</div>
-							<div class="alert alert-warning alert-dismissible fade show" role="alert" id="signinPasswordAlert2">
-							  <strong>Incorrect password.</strong>
-							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							    <span aria-hidden="true">&times;</span>
-							  </button>
-							</div>
-							<div class="text-center mb-3">
-								<button disabled class="btn brand-main btn-block btn-rounded z-depth-1a" id="quickstart-sign-in" name="signin">Sign In</button>
-							</div>
-							<p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign in with:</p>
-							<div class="text-center mb-3">
-								<button type="button" class="btn brand-main btn-block btn-rounded z-depth-1a"><i class="fab fa-google"></i> Google Sign in</button>
-							</div>
-
-
-						</div>
-
-						<!--Footer-->
-						<div class="modal-footer mx-5 pt-3 mb-1">
-							<p class="font-small grey-text d-flex justify-content-end">Not a member? <a class="blue-text ml-1" id="quickstart-sign-up" name="signup">Sign Up</a></p>
-						</div>
-
-					</div>
-				</section>
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
+  </div>
 </section>
 
-<button class="mdl-button mdl-js-button mdl-button--raised" disabled id="quickstart-verify-email" name="verify-email">Send Email Verification</button>
 
-
-
-<!-- Container where we'll display the user details -->
-<div class="quickstart-user-details-container">
-	Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
-	<div>Firebase auth <code>currentUser</code> object value:</div>
-	<pre><code id="quickstart-account-details">null</code></pre>
-</div>
-
-<script>
-function toggleSignIn() {
-      if (firebase.auth().currentUser) {
-        // [START signout]
-        firebase.auth().signOut();
-        // [END signout]
-      } else {
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        if (email.length < 4) {
-          $("#signinEmailAlert").show('fast');
-          return;
-        }
-        if (password.length < 4) {
-          $("#signinPasswordAlert1").show('fast');
-          return;
-        }
-        // Sign in with email and pass.
-        // [START authwithemail]
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // [START_EXCLUDE]
-          if (errorCode === 'auth/wrong-password') {
-            $("#signinPasswordAlert2").show('fast');
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-          document.getElementById('quickstart-sign-in').disabled = false;
-          // [END_EXCLUDE]
-        });
-        // [END authwithemail]
-      }
-      document.getElementById('quickstart-sign-in').disabled = true;
-    }
-    /**
-     * Handles the sign up button press.
-     */
-     $("quickstart-sign-up").click(function handleSignUp() {
-      var email = document.getElementById('email').value;
-      var password = document.getElementById('password').value;
-      if (email.length < 4) {
-        alert('Please enter an email address.');
-        return;
-      }
-      if (password.length < 4) {
-        alert('Please enter a password.');
-        return;
-      }
-      // Sign in with email and pass.
-      // [START createwithemail]
-      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // [START_EXCLUDE]
-        if (errorCode == 'auth/weak-password') {
-          alert('The password is too weak.');
-        } else {
-          alert(errorMessage);
-        }
-        console.log(error);
-        // [END_EXCLUDE]
-      });
-      // [END createwithemail]
-    })
-    /**
-     * Sends an email verification to the user.
-     */
-    function sendEmailVerification() {
-      // [START sendemailverification]
-      firebase.auth().currentUser.sendEmailVerification().then(function() {
-        // Email Verification sent!
-        // [START_EXCLUDE]
-        alert('Email Verification Sent!');
-        // [END_EXCLUDE]
-      });
-      // [END sendemailverification]
-    }
-    $("#quickstart-password-reset").click(function sendPasswordReset() {
-      var email = document.getElementById('email').value;
-      // [START sendpasswordemail]
-      firebase.auth().sendPasswordResetEmail(email).then(function() {
-        // Password Reset Email Sent!
-        // [START_EXCLUDE]
-        alert('Password Reset Email Sent!');
-        // [END_EXCLUDE]
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // [START_EXCLUDE]
-        if (errorCode == 'auth/invalid-email') {
-          alert(errorMessage);
-        } else if (errorCode == 'auth/user-not-found') {
-          alert(errorMessage);
-        }
-        console.log(error);
-        // [END_EXCLUDE]
-      });
-      // [END sendpasswordemail];
-    })
-    /**
-     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
-     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
-     *    out, and that is where we update the UI.
-     */
-    function initApp() {
-      // Listening for auth state changes.
-      // [START authstatelistener]
-      firebase.auth().onAuthStateChanged(function(user) {
-        // [START_EXCLUDE silent]
-        document.getElementById('quickstart-verify-email').disabled = true;
-        // [END_EXCLUDE]
-        if (user) {
-          // User is signed in.
-          var displayName = user.displayName;
-          var email = user.email;
-          var emailVerified = user.emailVerified;
-          var photoURL = user.photoURL;
-          var isAnonymous = user.isAnonymous;
-          var uid = user.uid;
-          var providerData = user.providerData;
-          // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-          console.log(uid);
-          if (!emailVerified) {
-            document.getElementById('quickstart-verify-email').disabled = false;
-          }
-          // [END_EXCLUDE]
-        } else {
-          // User is signed out.
-          // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
-          document.getElementById('quickstart-sign-in').textContent = 'Sign in';
-          document.getElementById('quickstart-account-details').textContent = 'null';
-          // [END_EXCLUDE]
-        }
-        // [START_EXCLUDE silent]
-        document.getElementById('quickstart-sign-in').disabled = false;
-        // [END_EXCLUDE]
-      });
-      // [END authstatelistener]
-      document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
-      document.getElementById('headerSignOut').addEventListener('click', toggleSignIn, false);
-    }
-    window.onload = function() {
-      initApp();
-    };</script>
-
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <section class="my-5">
+          <h2 class="h1-responsive font-weight-bold text-center my-5">What are User Journals?</h2>
+          <p class="lead grey-text text-center w-responsive mx-auto mb-5">User Journals are a method of capturing the fundamental requirements of any User Story. User Journals should be used to enhance User Stories not replace them, find out more on <a href="#">how to use User Journals</a>.</p>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="row mb-3">
+                <div class="col-2">
+                  <i class="far fa-address-card brand-main-icon"></i>
+                </div>
+                <div class="col-10">
+                  <h5 class="font-weight-bold mb-3">Who?</h5>
+                  <p class="grey-text">Arguably the most important aspect of a User Story's narrative, who is the intended user? Use your Personas!</p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-2">
+                  <i class="far fa-list-alt brand-main-icon"></i>
+                </div>
+                <div class="col-10">
+                  <h5 class="font-weight-bold mb-3">What?</h5>
+                  <p class="grey-text">Standard methods of defining the desired/required functionality for the users, "As a user I must..."</p>
+                </div>
+              </div>
+              <div class="row mb-md-0 mb-3">
+                <div class="col-2">
+                  <i class="far fa-hand-pointer brand-main-icon"></i>
+                  <i class="fa fa-2x fa-glass "></i>
+                </div>
+                <div class="col-10">
+                  <h5 class="font-weight-bold mb-3">When?</h5>
+                  <p class="grey-text mb-md-0">Define at what point the user should be able to perform the action. Should the user be logged in? Have a certain permission? Before or after other actions (linked dependancies)?</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <img class="img-fluid" src="https://mdbootstrap.com/img/Mockups/Transparent/Small/iphone-portfolio1.png" alt="Sample image">
+            </div>
+            <div class="col-md-4">
+              <div class="row mb-3">
+                <div class="col-2">
+                  <i class="far fa-window-maximize brand-main-icon"></i>
+                </div>
+                <div class="col-10">
+                  <h5 class="font-weight-bold mb-3">Where?</h5>
+                  <p class="grey-text">Is the story part of an Epic? What part of the application does the user story impact? My account, payment page, product details etc.</p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-2">
+                  <i class="far fa-question-circle brand-main-icon"></i>
+                </div>
+                <div class="col-10">
+                  <h5 class="font-weight-bold mb-3">Why?</h5>
+                  <p class="grey-text">Useful for defining the story priority, why does the user need this feature and why is it important? Your internal stakeholders will consider this useful.</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-2">
+                  <i class="fas fa-tasks brand-main-icon"></i>
+                </div>
+                <div class="col-10">
+                  <h5 class="font-weight-bold mb-3">How?</h5>
+                  <p class="grey-text mb-0">Once you have determined everything else, get sat down with your design, development and QA leads and determine what tasks are needed to fulfill the story.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
