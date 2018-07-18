@@ -1,0 +1,61 @@
+---
+title: Contact
+permalink: "/contact"
+layout: default
+pageID: contact
+description: "Contact the team or sign up for early access below."
+---
+
+{% include pageHeaderSmall.html %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <section class="section">
+        <p class="text-center w-responsive mx-auto mb-5">Do you have any questions about User Journals? Please get in touch below, alternatively <a href="#signup" id="idLink">sign up below</a> for early access.</p>
+        <div class="row justify-content-center">
+          <div class="col-md-8 mb-md-0 mb-5">
+            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                    <input type="text" id="contactName" name="name" class="form-control">
+                    <label for="contactName" class="">Your name</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                    <input type="text" id="contactEmail" name="email" class="form-control">
+                    <label for="contactEmail" class="">Your email</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="md-form mb-0">
+                    <input type="text" id="contactSubject" name="subject" class="form-control">
+                    <label for="contactSubject" class="">Subject</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="md-form">
+                    <textarea type="text" id="contactMessage" name="message" rows="2" class="form-control md-textarea"></textarea>
+                    <label for="contactMessage">Your message</label>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="text-center text-md-left">
+              <a class="btn btn-primary btn-block" id="contactSubmit">Send</a>
+            </div>
+            <div class="status"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col-12">
+      {% include signup.html %}
+  </div>
+</div>

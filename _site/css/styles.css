@@ -1,6 +1,42 @@
 
+body {
+  padding-top: 86px; }
+
+#idLink, #quickstart-sign-up, #quickstart-password-reset {
+  color: #FDB752 !important; }
+
+.navbar-light {
+  background-color: #FDB752; }
+
+#exampleSection {
+  margin-top: 50px; }
+
 #siginSection, #projects {
   margin-top: 40px; }
+
+#projects .list-group-item.disabled {
+  background-color: #FDB752;
+  opacity: .7;
+  color: white; }
+
+.btn-fab {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 0;
+  position: absolute;
+  font-size: 26px;
+  right: 0;
+  top: 10px;
+  z-index: 2;
+  background-color: #FDB752; }
+
+.btn-fab:hover {
+  z-index: 2; }
+
+.brand-main {
+  background-color: #FDB752;
+  color: white; }
 
 .blue-gradient {
 
@@ -27,7 +63,7 @@
 .form-elegant .z-depth-1-half,
 .form-elegant .btn:hover {
   -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
-  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); 
+  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
 
 #signinEmailAlert, #signinPasswordAlert1, #signinPasswordAlert2 {
   display: none; }
@@ -37,3 +73,56 @@
   min-width: 255px;
   background-color: #4C4C4C; }
 
+.sectionHeader .card-image {
+  background-size: cover; }
+
+.far.brand-main-icon, .fas.brand-main-icon {
+  font-size: 2em;
+  color: #FDB752; }
+
+.form-section {
+  background-color: #E0E0E0;
+  padding: 10px;
+  margin-bottom: 20px; }
+
+tbody {
+  background-color: white; }
+
+.storyTabs {
+  width: 100%;
+  padding: 0; }
+
+.storyTabsItem {
+  list-style: none;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: #E0E0E0; }
+
+.storyTabsItem.activeTab {
+  border-top: 3px solid #FDB752;
+  background-color: white; }
+
+#signup {
+  background-color: white;
+  text-align: center;
+  padding: 50px; }
+
+#signupForm {
+  justify-content: center; }
+
+#signupForm .md-form {
+  margin-left: 20px;
+  margin-right: 20px; }
+
+.md-form input[type=text]:focus:not([readonly]), .md-form input[type=email]:focus:not([readonly]), .md-form input[type=password]:focus:not([readonly]), .md-form textarea[type=text]:focus:not([readonly]) {
+  border-bottom-color: #FDB752;
+  box-shadow: 0 1px 0 0 #FDB752; }
+
+.md-form input[type=text]:focus:not([readonly]) + label, .md-form input[type=email]:focus:not([readonly]) + label, .md-form input[type=password]:focus:not([readonly]) + label, .md-form textarea[type=text]:focus:not([readonly]) + label {
+  color: #FDB752 !important; }
+
+.btn-primary, .btn-primary#signupSubmit {
+  border-color: #FDB752 !important;
+  background-color: #FDB752 !important;
+  color: white; }

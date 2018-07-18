@@ -6,29 +6,18 @@ layout: page
 
 
 <section id="projects">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col">
-        <h1>Projects</h1>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row" id="showProjects">
       <div class="col-3">
-        <a class="waves-effect" data-toggle="modal" data-target="#newProjectModal">
-        <div class="card card-image">
-            <div class="text-white text-center d-flex align-items-center py-5 px-4">
-                <div>
-                    <h5 class="pink-text"><i class="fas fa-plus"></i></h5>
-                    <h3 class="card-title pt-2"><strong>Add New Project</strong></h3>
-                </div>
-            </div>
+        <div class="list-group" id="showProjects">
+          <button class="btn btn-fab" data-toggle="modal" data-target="#newProjectModal"><i class="fas fa-plus"></i></button>
+          <div href="#" class="list-group-item disabled">Projects</div>
         </div>
-      </a>
       </div>
+      <div class="col-9">
     </div>
   </div>
+</div>
 </section>
 <!-- new project modal -->
 <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
@@ -49,7 +38,7 @@ layout: page
                   <textarea type="text" id="newProjectDescription" class="form-control md-textarea" rows="3"></textarea>
                   <label for="newProjectDescription">Project Description</label>
                 </div>
-                <button class="btn btn-default" id="newProjectCreate">Create</button>
+                <button class="btn btn-primary" id="newProjectCreate">Create</button>
               </div>
         </div>
     </div>
@@ -112,9 +101,7 @@ $(document).ready(function initApp() {
                       }
                     })
                   }
-
-                  $("#showProjects").prepend(
-                    '<div class="col-3"><a class="projectLink id="' + projectId + '" waves-effect"><div id="projectLink"></div><div class="card card-image"><div class="text-white text-center d-flex align-items-center py-5 px-4"><div><h3 class="card-title pt-2"><strong>' + projectName + '</strong></h3><h5 class="pink-text">' + projectDescription + '</h5></div></div></div></a></div>');
+                  $("#showProjects").append('<button id="projectButton" data-project-id="' + projectId +'" class="list-group-item list-group-item-action waves-effect">'+ projectName +'<span id="projectID">' + projectId + '</button>');
                   })
                 }
               })
@@ -133,6 +120,9 @@ $(document).ready(function initApp() {
             "DateCreate": newProjectDateCreate,
             "DateClose": ""
           }
+          if (newProjectName === "") {
+            Command: toastr["info"]("Please enter a name for your project ", "Oops", {"positionClass": "toast-bottom-left"})
+          } else {
           $.ajax({
             url: newProjectUrl,
             type: 'POST',
@@ -142,7 +132,26 @@ $(document).ready(function initApp() {
           })
           .done(function() {
             console.log("success");
-            showProjects();
+            Command: toastr["success"](" ", "Project Created", {"positionClass": "toast-bottom-left"})
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            $('#newProjectModal').modal('hide');
+            $("#newProjectName").val("");
+            $("#newProjectDescription").val("");
           })
           .fail(function() {
             console.log("error");
@@ -150,7 +159,7 @@ $(document).ready(function initApp() {
           .always(function() {
             console.log("complete");
           });
-
+        }
       });
       if (!emailVerified) {
         console.log(uid);
@@ -166,4 +175,10 @@ $(document).ready(function initApp() {
     // [END_EXCLUDE]
   })
 });
+</script>
+<script>
+$("#projectButton").on('click', function() {
+  var testingNaaman = $(this).children("#projectID").text();
+  console.log(testingNaaman);
+}, 2000);
 </script>

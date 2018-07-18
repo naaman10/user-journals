@@ -1,4 +1,5 @@
 
+![](/img/logo-main.svg)
 
 # User Journals
 

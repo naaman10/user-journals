@@ -1,4 +1,4 @@
-
+![](/img/logo-main.svg)
 # User Journals
 
 User Journals is an app which allows you to record User Stories in a User Journal format.

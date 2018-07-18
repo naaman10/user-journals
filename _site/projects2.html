@@ -80,13 +80,13 @@
     <section id="projects">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3">
+      <div class="col-12 col-md-3">
         <div class="list-group" id="showProjects">
           <button class="btn btn-fab" data-toggle="modal" data-target="#newProjectModal"><i class="fas fa-plus"></i></button>
           <div href="#" class="list-group-item disabled">Projects</div>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-12 col-md-9">
     </div>
   </div>
 </div>
@@ -118,6 +118,9 @@
 
 
 <!-- modal end -->
+
+
+
 <script>
 $(document).ready(function initApp() {
   // Listening for auth state changes.
@@ -129,6 +132,7 @@ $(document).ready(function initApp() {
     // [END_EXCLUDE]
     if (user) {
       // User is signed in.
+      var database = firebase.database();
       var displayName = user.displayName;
       var email = user.email;
       var emailVerified = user.emailVerified;
@@ -136,123 +140,45 @@ $(document).ready(function initApp() {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
-      $(function showProjects() {
-        var userID = user.uid;
-        var url = ("https://user-journals.firebaseio.com/users/" + uid + ".json");
-        var projectsData = $.ajax({
-          url: url,
-          type: 'GET',
-          dataType: 'json',
-          data: {param1: 'value1'}
+      var projectsRef = firebase.database().ref('users/' + uid + '/projects/');
+      projectsRef.on("child_added", function(data, prevChildKey) {
+        var userProjects = data.val();
+           $("#showProjects").append('<button id="projectButton" data-projectid="' + data.key + '" class="list-group-item list-group-item-action waves-effect">'+ userProjects.ProjectName +'</button>');
+
+        }, function (error) {
+           console.log("Error: " + error.code);
         })
-        .done(function() {
-          var projectObj = projectsData.responseJSON;
-
-          enumerate(projectObj.projects);
-
-          });
-
-          function enumerate(o){
-            var projectId = '';
-            var projectName = '';
-            var projectDescription = '';
-              //iterate across o, passing keys as k and values as v
-              $.each(o, function(k,v){
-
-                  //if v has nested depth
-                  if(typeof v == "object"){
-                    //write the key to the console
-                    projectId = k;
-                    //recursively call enumerate on the nested properties
-                    $.each(v, function(l, w) {
-                      if (l == "ProjectName") {
-                        //log the key & value
-                        projectName = String(w);
-                      } else if (l == "ProjectDescription") {
-                        projectDescription = String(w);
-                      }
-                    })
-                  }
-                  $("#showProjects").append('<button id="projectButton" data-project-id="' + projectId +'" class="list-group-item list-group-item-action waves-effect">'+ projectName +'<span id="projectID">' + projectId + '</button>');
-                  })
-                }
-              })
-
-
-
       $("#newProjectCreate").click(function() {
-        event.preventDefault();
-          var newProjectUrl = ("https://user-journals.firebaseio.com/users/" + uid + "/projects.json");
-          var newProjectName = $("#newProjectName").val();
-          var newProjectDescription = $("#newProjectDescription").val();
-          var newProjectDateCreate = new Date();
-          var newProjectFull = {
-            "ProjectName": newProjectName,
-            "ProjectDescription": newProjectDescription,
-            "DateCreate": newProjectDateCreate,
-            "DateClose": ""
-          }
+        var newProjectName = $("#newProjectName").val();
+        var newProjectDescription = $("#newProjectDescription").val();
+        var d = new Date();
           if (newProjectName === "") {
             Command: toastr["info"]("Please enter a name for your project ", "Oops", {"positionClass": "toast-bottom-left"})
           } else {
-          $.ajax({
-            url: newProjectUrl,
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(newProjectFull)
-          })
-          .done(function() {
-            console.log("success");
-            Command: toastr["success"](" ", "Project Created", {"positionClass": "toast-bottom-left"})
-            toastr.options = {
-              "closeButton": true,
-              "debug": false,
-              "newestOnTop": false,
-              "progressBar": false,
-              "preventDuplicates": false,
-              "onclick": null,
-              "showDuration": "300",
-              "hideDuration": "1000",
-              "timeOut": "5000",
-              "extendedTimeOut": "1000",
-              "showEasing": "swing",
-              "hideEasing": "linear",
-              "showMethod": "fadeIn",
-              "hideMethod": "fadeOut"
-            }
-            $('#newProjectModal').modal('hide');
-            $("#newProjectName").val("");
-            $("#newProjectDescription").val("");
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
-        }
-      });
-      if (!emailVerified) {
-        console.log(uid);
-      }
-      // [END_EXCLUDE]
-    } else {
-      // User is signed out.
-      // [START_EXCLUDE]
+            var userProjects = firebase.database().ref('users/' + uid + '/projects/');
+            var newProject = userProjects.push();
+            newProject.set({
+                ProjectName: newProjectName,
+                ProjectDescription: newProjectDescription,
+                DateCreate : Date(),
+                DateClose : ""
+              },function(error) {
+                if (error) {
+                  Command: toastr["warning"]("Error code: " + error.code , "An error occurred ", {"positionClass": "toast-bottom-left"})
+                } else {
+                  Command: toastr["success"](" ", "Project Created", {"positionClass": "toast-bottom-left"})
+                  $('#newProjectModal').modal('hide');
+                  $("#newProjectName").val(null);
+                  $("#newProjectDescription").val(null);
+                }
+            })
+          }
+        });
 
-      // [END_EXCLUDE]
-    }
-    // [START_EXCLUDE silent]
-    // [END_EXCLUDE]
-  })
-});
-</script>
-<script>
-$("#projectButton").on('click', function() {
-  var testingNaaman = $(this).children("#projectID").text();
-  console.log(testingNaaman);
-}, 2000);
+
+          }
+      })
+    });
 </script>
 
 
