@@ -6,14 +6,14 @@ pageID: about
 description: "Create better User Stories with the Journal method."
 ---
 {% include pageHeader.html %}
-
+{% include signup.html %}
 <section>
   <div class="container">
     <div class="row">
       <div class="col-12">
         <section class="my-5">
           <h2 class="h1-responsive font-weight-bold text-center my-5">What are User Journals?</h2>
-          <p class="lead grey-text text-center w-responsive mx-auto mb-5">User Journals are a method of capturing the fundamental requirements of any User Story. User Journals should be used to enhance User Stories not replace them, find out more on <a href="#">how to use User Journals</a>.</p>
+          <p class="lead grey-text text-center w-responsive mx-auto mb-5">User Journals are a method of capturing the fundamental requirements of any User Story. User Journals should be used to enhance User Stories not replace them, find out more on <a href="{{site.github.url}}/how-to" id="idLink">how to use User Journals</a>.</p>
           <div class="row">
             <div class="col-md-4">
               <div class="row mb-3">
@@ -46,7 +46,7 @@ description: "Create better User Stories with the Journal method."
               </div>
             </div>
             <div class="col-md-4 text-center">
-              <img class="img-fluid" src="https://mdbootstrap.com/img/Mockups/Transparent/Small/iphone-portfolio1.png" alt="Sample image">
+              <img class="img-fluid" src="{{ site.github.url }}/img/uj_iphone.png" width="300" alt="Sample image">
             </div>
             <div class="col-md-4">
               <div class="row mb-3">

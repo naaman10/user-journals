@@ -1,13 +1,10 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-light warning-color double-nav">
-    <a class="navbar-brand" href="#"><img src="{{site.github.url}}/img/logo-white.svg" width="60" height="60" alt="">User Journals</a>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light double-nav">
+    <a class="navbar-brand" href="{{site.github.url}}"><img src="{{site.github.url}}/img/logo-white.svg" width="60" height="60" alt="">User Journals</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
       <ul class="navbar-nav mr-auto">
-          <li class="nav-item ">
-              <a class="nav-link" href="#">Home</a>
-          </li>
           <li class="nav-item">
               <a class="nav-link" href="{{ site.github.url }}/how-to">How To</a>
           </li>
@@ -19,7 +16,7 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="btn btn-outline-white btn-rounded" href="{{site.github.url}}/login"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
+          <li class="nav-item"><a class="btn btn-outline-white btn-rounded" id="signInOut" href="{{site.github.url}}/login"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
             <!-- <li class="nav-item dropdown">
 
                 <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

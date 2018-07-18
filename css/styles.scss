@@ -1,7 +1,7 @@
 ---
 ---
 
-$brand-main: #FEB945;
+$brand-main: #FDB752;
 $stylish-color-dark: #80EBB7;
 $special-color-dark: #263238;
 $special-color: #37474F;
@@ -10,14 +10,37 @@ $unique-color: #3F729B;
 body {
   padding-top: 86px;
 }
-a {
-  color: $brand-main;
+#idLink,#quickstart-sign-up, #quickstart-password-reset {
+  color: $brand-main!important;
+}
+.navbar-light {
+  background-color: $brand-main;
 }
 #exampleSection {
   margin-top: 50px;
 }
 #siginSection, #projects {
   margin-top: 40px;
+}
+#projects .list-group-item.disabled {
+  background-color: $brand-main;
+  opacity: .7;
+  color: white;
+}
+.btn-fab {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 0;
+  position: absolute;
+  font-size: 26px;
+  right: 0;
+  top: 10px;
+  z-index: 2;
+  background-color: $brand-main;
+}
+.btn-fab:hover{
+  z-index: 2;
 }
 .brand-main {
   background-color: $brand-main;
@@ -86,4 +109,28 @@ tbody {
 .storyTabsItem.activeTab {
   border-top: 3px solid $brand-main;
   background-color: white;
+}
+#signup {
+  background-color: white;
+  text-align: center;
+  padding: 50px;
+}
+#signupForm {
+  justify-content: center;
+}
+#signupForm .md-form {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.md-form input[type=text]:focus:not([readonly]), .md-form input[type=email]:focus:not([readonly]),.md-form input[type=password]:focus:not([readonly]),.md-form textarea[type=text]:focus:not([readonly]) {
+  border-bottom-color: $brand-main;
+  box-shadow: 0 1px 0 0 $brand-main;
+}
+.md-form input[type=text]:focus:not([readonly])+label, .md-form input[type=email]:focus:not([readonly])+label, .md-form input[type=password]:focus:not([readonly])+label,.md-form textarea[type=text]:focus:not([readonly])+label {
+  color: $brand-main!important;
+}
+.btn-primary,.btn-primary#signupSubmit {
+  border-color: $brand-main!important;
+  background-color: $brand-main!important;
+  color: white;
 }
