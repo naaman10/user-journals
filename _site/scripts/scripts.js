@@ -13,6 +13,7 @@ $(document).ready(function() {
     var naaman = $(this).attr('id');
     console.log(naaman);
   });
+
 });
 $(".storyTabsItem").click(function() {
   $(".storyTabsItem.activeTab").removeClass('activeTab');
