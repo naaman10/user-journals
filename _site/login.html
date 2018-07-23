@@ -151,7 +151,6 @@
 	</div>
 </section>
 
-<button class="mdl-button mdl-js-button mdl-button--raised" disabled id="quickstart-verify-email" name="verify-email">Send Email Verification</button>
 
 
 <script>
@@ -268,7 +267,6 @@ function toggleSignIn() {
       // [START authstatelistener]
       firebase.auth().onAuthStateChanged(function(user) {
         // [START_EXCLUDE silent]
-        document.getElementById('quickstart-verify-email').disabled = true;
         // [END_EXCLUDE]
         if (user) {
           // User is signed in.
@@ -286,7 +284,7 @@ function toggleSignIn() {
 					$("#userEmail").append(email);
           console.log(uid);
           if (!emailVerified) {
-            document.getElementById('quickstart-verify-email').disabled = false;
+
           }
           // [END_EXCLUDE]
         } else {
