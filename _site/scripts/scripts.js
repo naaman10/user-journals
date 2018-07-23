@@ -212,7 +212,8 @@ $(document).ready(function() {
       // [END_EXCLUDE]
       if (user) {
         // User is signed in.
-        $("#signInOut").html('<i class="fas fa-sign-in-alt"></i> Sign Out');
+        $("#signInOut").html('<i class="fas fa-user-circle"></i> Manage');
+        $("#quickstart-sign-in").text('Sign Out');
       } else {
         $("#signInOut").html('<i class="fas fa-sign-in-alt"></i> Sign In');
       }
