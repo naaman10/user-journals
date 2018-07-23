@@ -8,177 +8,293 @@ layout: page
 <section id="projects">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3">
+      <div class="col-12 col-md-3">
         <div class="list-group" id="showProjects">
-          <button class="btn btn-fab" data-toggle="modal" data-target="#newProjectModal"><i class="fas fa-plus"></i></button>
-          <div href="#" class="list-group-item disabled">Projects</div>
+          <div href="#" class="list-group-item header">Projects <button class="btn btn-outline-white btn-small" data-toggle="modal" data-target="#newProjectModal"><i class="fas fa-plus"></i> Add</button></div>
+        </div>
+        <div class="list-group" id="showPersonas">
+          <div href="#" class="list-group-item header">Personas <button class="btn btn-outline-white btn-small" data-toggle="modal" data-target="#newProjectPersona"><i class="fas fa-plus"></i> Add</button></div>
+          <div id="personaList">
+
+          </div>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-12 col-md-9">
+        <div id="selectedProjectDetails">
+
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </section>
 <!-- new project modal -->
 <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">New Project</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">New Project</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body mx-3">
-                <div class="md-form mb-5">
-                    <input type="text" id="newProjectName" class="form-control">
-                    <label for="newProjectName">Project Name</label>
-                </div>
-                <div class="md-form mb-4">
-                  <textarea type="text" id="newProjectDescription" class="form-control md-textarea" rows="3"></textarea>
-                  <label for="newProjectDescription">Project Description</label>
-                </div>
-                <button class="btn btn-primary" id="newProjectCreate">Create</button>
-              </div>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="newProjectName" class="form-control">
+          <label for="newProjectName">Project Name</label>
         </div>
+        <div class="md-form mb-4">
+          <textarea type="text" id="newProjectDescription" class="form-control md-textarea" rows="3"></textarea>
+          <label for="newProjectDescription">Project Description</label>
+        </div>
+        <button class="btn btn-primary" id="newProjectCreate">Create</button>
+      </div>
     </div>
+  </div>
 </div>
+<div class="modal fade" id="newEpicModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">New Epic</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="newEpicName" class="form-control">
+          <label for="newEpicName">Epic Name</label>
+        </div>
+        <div class="md-form mb-5">
+          <input type="text" id="epicProjectLink" class="form-control">
+          <label for="epicProjectLink">Project Link</label>
+        </div>
+        <div class="md-form mb-4">
+          <textarea type="text" id="newEpicDescription" class="form-control md-textarea" rows="3"></textarea>
+          <label for="newEpicDescription">Epic Description</label>
+        </div>
+        <button class="btn btn-primary" id="newEpicCreate">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Epic End -->
+<!-- Person Modal -->
+<div class="modal fade" id="newProjectPersona" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">New Persona</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="newPersonaName" class="form-control">
+          <label for="newEpicName">Name</label>
+        </div>
+        <div class="md-form mb-5">
+          <select id="newPersonaAge" class="materialSelect">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="18-25">18-25</option>
+              <option value="26-35">26-35</option>
+              <option value="36-45">36-45</option>
+              <option value="46 up">46 up</option>
+          </select>
+          <label for="newPersonaAge">Age Group</label>
+        </div>
+        <div class="md-form mb-2">
+          <select id="newPersonaSalary" class="materialSelect">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="£18,000 or lower">£18,000 or lower</option>
+              <option value="£18,001 - £24,000">£18,001 - £24,000</option>
+              <option value="£25,000 - £39,000">£25,000 - £39,000</option>
+              <option value="£40,000 or higher">£40,000 or higher</option>
+          </select>
+          <label for="newPersonaSalary">Salary Group</label>
+        </div>
+        <div class="form mb-4" id="newPersonaGender">
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value="Male">
+            <label class="custom-control-label" for="customRadio1">Male</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" value="Female">
+            <label class="custom-control-label" for="customRadio2">Female</label>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="newEpicCreate" onclick="createPersona()">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- persona view modal -->
+<div class="modal fade" id="viewPersonaModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="viewPersonaAge" class="form-control">
+          <label for="newEpicName">Age Group</label>
+        </div>
+        <div class="md-form mb-5">
+          <input type="text" id="viewPersonaSalary" class="form-control">
+          <label for="newEpicName">Salary Group</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include epicModal.html %}
 
 
 <!-- modal end -->
+
+
+
 <script>
-$(document).ready(function initApp() {
-  // Listening for auth state changes.
-  // [START authstatelistener]
+  $(document).ready(function initApp() {
+    // Listening for auth state changes.
+    // [START authstatelistener]
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    // [START_EXCLUDE silent]
+    firebase.auth().onAuthStateChanged(function(user) {
+      // [START_EXCLUDE silent]
 
-    // [END_EXCLUDE]
-    if (user) {
-      // User is signed in.
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var isAnonymous = user.isAnonymous;
-      var uid = user.uid;
-      var providerData = user.providerData;
-      $(function showProjects() {
-        var userID = user.uid;
-        var url = ("https://user-journals.firebaseio.com/users/" + uid + ".json");
-        var projectsData = $.ajax({
-          url: url,
-          type: 'GET',
-          dataType: 'json',
-          data: {param1: 'value1'}
+      // [END_EXCLUDE]
+      if (user) {
+        // User is signed in.
+        var database = firebase.database();
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        var projectsRef = firebase.database().ref('users/' + uid + '/projects/');
+        var personaRef = firebase.database().ref('users/' + uid + '/personas/');
+        projectsRef.on("child_added", function(data, prevChildKey) {
+          var userProjects = data.val();
+
+          $("#showProjects").append('<button id="projectButton" onclick="getProject(this);" data-projectid="' + data.key + '" class="list-group-item list-group-item-action waves-effect">' + userProjects.ProjectName + '</button>');
+        }, function(error) {
+          console.log("Error: " + error.code);
         })
-        .done(function() {
-          var projectObj = projectsData.responseJSON;
-
-          enumerate(projectObj.projects);
-
-          });
-
-          function enumerate(o){
-            var projectId = '';
-            var projectName = '';
-            var projectDescription = '';
-              //iterate across o, passing keys as k and values as v
-              $.each(o, function(k,v){
-
-                  //if v has nested depth
-                  if(typeof v == "object"){
-                    //write the key to the console
-                    projectId = k;
-                    //recursively call enumerate on the nested properties
-                    $.each(v, function(l, w) {
-                      if (l == "ProjectName") {
-                        //log the key & value
-                        projectName = String(w);
-                      } else if (l == "ProjectDescription") {
-                        projectDescription = String(w);
-                      }
-                    })
-                  }
-                  $("#showProjects").append('<button id="projectButton" data-project-id="' + projectId +'" class="list-group-item list-group-item-action waves-effect">'+ projectName +'<span id="projectID">' + projectId + '</button>');
-                  })
-                }
-              })
-
-
-
-      $("#newProjectCreate").click(function() {
-        event.preventDefault();
-          var newProjectUrl = ("https://user-journals.firebaseio.com/users/" + uid + "/projects.json");
+        personaRef.on("child_added", function(data, prevChildKey) {
+          var userPersonas = data.val();
+          $("#personaList").append('<button id="personaButton" onclick="viewPersona(this)" data-personaId="' + data.key + '"  class="list-group-item list-group-item-action waves-effect" >' + userPersonas.personaName + '</button>');
+        }, function(error) {
+          console.log("Error: " + error.code);
+        })
+        $("#newProjectCreate").click(function() {
           var newProjectName = $("#newProjectName").val();
           var newProjectDescription = $("#newProjectDescription").val();
-          var newProjectDateCreate = new Date();
-          var newProjectFull = {
-            "ProjectName": newProjectName,
-            "ProjectDescription": newProjectDescription,
-            "DateCreate": newProjectDateCreate,
-            "DateClose": ""
-          }
+          var d = new Date();
           if (newProjectName === "") {
-            Command: toastr["info"]("Please enter a name for your project ", "Oops", {"positionClass": "toast-bottom-left"})
-          } else {
-          $.ajax({
-            url: newProjectUrl,
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(newProjectFull)
-          })
-          .done(function() {
-            console.log("success");
-            Command: toastr["success"](" ", "Project Created", {"positionClass": "toast-bottom-left"})
-            toastr.options = {
-              "closeButton": true,
-              "debug": false,
-              "newestOnTop": false,
-              "progressBar": false,
-              "preventDuplicates": false,
-              "onclick": null,
-              "showDuration": "300",
-              "hideDuration": "1000",
-              "timeOut": "5000",
-              "extendedTimeOut": "1000",
-              "showEasing": "swing",
-              "hideEasing": "linear",
-              "showMethod": "fadeIn",
-              "hideMethod": "fadeOut"
-            }
-            $('#newProjectModal').modal('hide');
-            $("#newProjectName").val("");
-            $("#newProjectDescription").val("");
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
-        }
-      });
-      if (!emailVerified) {
-        console.log(uid);
+            Command: toastr["info"]("Please enter a name for your project ", "Oops", {
+              "positionClass": "toast-bottom-left"
+            })
+          }
+          else {
+            var userProjects = firebase.database().ref('users/' + uid + '/projects/');
+            var newProject = userProjects.push();
+            newProject.set({
+              ProjectName: newProjectName,
+              ProjectDescription: newProjectDescription,
+              DateCreate: Date(),
+              DateClose: ""
+            }, function(error) {
+              if (error) {
+                Command: toastr["warning"]("Error code: " + error.code, "An error occurred ", {
+                  "positionClass": "toast-bottom-left"
+                })
+              }
+              else {
+                Command: toastr["success"](" ", "Project Created", {
+                  "positionClass": "toast-bottom-left"
+                })
+                $('#newProjectModal').modal('hide');
+                $("#newProjectName").val(null);
+                $("#newProjectDescription").val(null);
+              }
+            })
+          }
+        });
       }
-      // [END_EXCLUDE]
-    } else {
-      // User is signed out.
-      // [START_EXCLUDE]
+    })
 
-      // [END_EXCLUDE]
-    }
-    // [START_EXCLUDE silent]
-    // [END_EXCLUDE]
-  })
-});
-</script>
-<script>
-$("#projectButton").on('click', function() {
-  var testingNaaman = $(this).children("#projectID").text();
-  console.log(testingNaaman);
-}, 2000);
+  });
+
+  function getProject(identifier) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        var database = firebase.database();
+        var uid = user.uid;
+        var selectedProject = $(identifier).data('projectid');
+        var projectRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject);
+        $.cookie("ujapid", selectedProject);
+        return projectRef.once('value').then(function(snapshot) {
+          var username = (snapshot.val());
+          var projectName = (snapshot.val().ProjectName);
+          var ProjectDescription = (snapshot.val().ProjectDescription);
+          $("#selectedProjectDetails").empty();
+          $("#selectedProjectDetails").append('<div class="card"><div class="card-header primary-color white-text"><div class="row"><div class="col-12 col-md-6"><h3>' + projectName + '</h3><p class="card-text">' + ProjectDescription +
+            '</p></div></div><div class="col-12 col-md-6"</div></div></div><div class="card card-body"><div class="row" id="listEpics"></div><button data-toggle="modal" data-target="#newEpicModal" class="btn btn-primary">Add Epic</button></div></div>'
+          )
+          $("#epicProjectLink").val(projectName);
+          $("#epicProjectLink").attr('data-projectid', selectedProject);
+          $("#epicProjectLink").siblings('label').addClass('active');
+          var epicListRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject + '/epics/');
+          epicListRef.on("child_added", function(data, prevChildKey) {
+            var projectEpics = data.val();
+            var epicId = data.key;
+            $("#listEpics").append('<div class="col-12 col-md-4"><div class="card text-center z-depth-2 mb-3"><div class="card-body"><h3 class="card-title">' + projectEpics.EpicName + '</h3><p class="mb-0">' + projectEpics.epicDescription + '</p><button class="btn btn-outline-primary btn-block wave-effect" id="viewEpic" data-target="#viewEpicModal" data-epicid="' + data.key + '" onclick="activeEpic(this)">View Epic</button></div></div></div>');
+          }, function(error) {
+            console.log("Error: " + error.code);
+          })
+          $("#newEpicCreate").click(function() {
+            var newEpicName = $("#newEpicName").val();
+            var newEpicDescription = $("#newEpicDescription").val();
+            var d = new Date();
+            if (newEpicName === "") {
+              Command: toastr["info"]("Please enter a name for your epic ", "Oops", {
+                "positionClass": "toast-bottom-left"
+              })
+            }
+            else {
+              var pathToEpic = firebase.database().ref('users/' + uid + '/projects/' + selectedProject + '/epics/');
+              var newEpic = pathToEpic.push();
+              newEpic.set({
+                EpicName: newEpicName,
+                epicDescription: newEpicDescription,
+                DateCreate: Date(),
+                DateClose: ""
+              }, function(error) {
+                if (error) {
+                  Command: toastr["warning"]("Error code: " + error.code, "An error occurred ", {
+                    "positionClass": "toast-bottom-left"
+                  })
+                }
+                else {
+                  Command: toastr["success"](" ", "Epic Created", {
+                    "positionClass": "toast-bottom-left"
+                  })
+                  $('#newEpicModal').modal('hide');
+                  $("#newEpicName").val(null);
+                  $("#newEpicDescription").val(null);
+                }
+              })
+            }
+          });
+        })
+      }
+    })
+  }
 </script>

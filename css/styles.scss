@@ -20,31 +20,35 @@ body {
 #exampleSection {
   margin-top: 50px;
 }
-
-
+select.materialSelect {
+  width: 100%;
+  background-color: white;
+  border: none;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    -webkit-appearance: none;
+}
+.materialSelect + label {
+  top: -25px;
+}
 
 #siginSection, #projects {
   margin-top: 40px;
 }
-#projects .list-group-item.disabled {
+#projects .list-group {
+  margin-bottom: 20px;
+}
+#projects .list-group-item.header, #showUserStories .list-group-item.header {
   background-color: $brand-main;
   opacity: .7;
   color: white;
 }
-.btn-fab {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  padding: 0;
-  position: absolute;
-  font-size: 26px;
-  right: 0;
-  top: 10px;
-  z-index: 2;
-  background-color: $brand-main;
-}
-.btn-fab:hover{
-  z-index: 2;
+#showProjects .btn-small, #showPersonas .btn-small, #showUserStories .btn-small  {
+  float: right;
 }
 .brand-main {
   background-color: $brand-main;
@@ -138,4 +142,44 @@ tbody {
   border-color: $brand-main!important;
   background-color: $brand-main!important;
   color: white;
+}
+.btn-outline-primary {
+  border-color: $brand-main!important;
+  color: $brand-main!important;
+}
+.btn-outline-primary:hover {
+  border-color: $brand-main!important;
+  color: white!important;
+  background-color: $brand-main!important;
+}
+.card-header.primary-color {
+  background-color: #FFCB7A!important;
+
+}
+#viewEpicModal, #viewEpicModal .modal-dialog,#viewEpicModal .modal-dialog .modal-content {
+  height: 100%;
+  overflow-y: auto;
+}
+#viewEpicModal .modal-dialog {
+  margin: 0;
+  overflow-y: auto;
+}
+#viewEpicModal .modal-dialog .modal-content .modal-header {
+  min-height: 80px;
+}
+#userStoryDetailView {
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#userStoryDetailView.new {
+  display: none;
+}
+#siginOutForm, #inputSave {
+  display: none;
+}
+#addUserImage {
+  padding: 30px;
+  background-color: #eee;
+  text-align: center;
 }

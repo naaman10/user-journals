@@ -4,10 +4,17 @@ $(window).on('load', function(){
     NProgress.done();
   });
 });
+$("#addUserImage").dropzone({ url: "http://user-journals.appspot.com/images/" });
+Dropzone.options.addUserImage = {
+  method: "put",
+  dictDefaultMessage: "Drag and drop of click to add image (recommended 300x300px)",
+  acceptedFiles: ".jpg,.jpeg,.png"
+}
 $('#projectButton').click(function(event) {
   var naaman = $(this).attr('data-projectid');
   console.log("naaman: " + naaman);
 });
+
 $(document).ready(function() {
   $(".projectLink").click(function() {
     var naaman = $(this).attr('id');
@@ -211,3 +218,88 @@ $(document).ready(function() {
       }
     })
   });
+  function activeEpic(identifier) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        var database = firebase.database();
+        var uid = user.uid;
+        var selectedProject = $.cookie("ujapid");
+        var selectedEpic = $(identifier).data('epicid');
+        $.cookie("ujaeid", selectedEpic);
+        var epicRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject + "/epics/" + selectedEpic);
+				return epicRef.once('value').then(function(snapshot) {
+					var epicName = (snapshot.val().EpicName);
+					var epicDescription = (snapshot.val().epicDescription);
+					$("#epicTitle").text(epicName);
+          $("#viewEpicModal").modal('show')
+				})
+  }
+})
+}
+function createPersona() {
+  firebase.auth().onAuthStateChanged(function(user){
+    if (user) {
+      var database = firebase.database();
+      var uid = user.uid;
+      var personaName = $("#newPersonaName").val();
+      var personaAge = $("#newPersonaAge").val();
+      var personaSalary = $("#newPersonaSalary").val();
+      var personaGender = $("#newPersonaGender input:radio:checked").val();
+      var d = new Date();
+      if (personaName === "") {Command: toastr["info"]("Please enter a name for your persona ", "Oops", {
+        "positionClass": "toast-bottom-left"
+      })
+    }
+    else {
+      var personaPath = firebase.database().ref('users/' + uid + '/personas/');
+      var newPersona = personaPath.push();
+      newPersona.set({
+        personaName: personaName,
+        personaAge: personaAge,
+        personaSalary: personaSalary,
+        personaGender: personaGender,
+        DateCreate: Date(),
+        DateClose: ""
+      }, function(error) {
+        if (error) {
+          Command: toastr["warning"]("Error code: " + error.code, "An error occurred ", {"positionClass": "toast-bottom-left"})
+        }
+        else {
+          Command: toastr["success"](" ", "Persona Created", {
+            "positionClass": "toast-bottom-left"
+          })
+          $('#newProjectPersona').modal('hide');
+          $("#newPersonaName").val(null);
+          $("#newPersonaAge").val(null);
+          $("#newPersonaSalary").val(null);
+          $("#newPersonaGender").val(null);
+        }
+      })
+    }
+    }
+  })
+}
+function viewPersona(identifier) {
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        var database = firebase.database();
+        var uid = user.uid;
+        var selectedPersona = $(identifier).data('personaid');
+        $.cookie("ujaperid", selectedPersona);
+        var personaRef = firebase.database().ref('users/' + uid + '/personas/' + selectedPersona);
+        return personaRef.once('value').then(function(snapshot) {
+            var personaName = (snapshot.val().personaName);
+            var personaAge = (snapshot.val().personaAge);
+            var personaSalary = (snapshot.val().personaSalary);
+            console.log(personaName)
+            // var personaDescription = (snapshot.val().epicDescription);
+            $("#viewPersonaModal .modal-title").text(personaName);
+            $("#viewPersonaAge").val(personaAge);
+            $("#viewPersonaAge").siblings('label').addClass('active');
+            $("#viewPersonaSalary").val(personaSalary);
+            $("#viewPersonaSalary").siblings('label').addClass('active');
+            $("#viewPersonaModal").modal('show')
+          })
+        }
+      })
+  }

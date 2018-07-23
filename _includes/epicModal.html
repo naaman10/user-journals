@@ -1,0 +1,145 @@
+<!-- Epic Modal -->
+<div class="modal fade" id="viewEpicModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-fluid" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title w-100 font-weight-bold" data-epicid="" id="epicTitle">EpicName</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body mx-3">
+				<div class="row">
+					<div class="col-12 col-md-3">
+						<div class="list-group" id="showUserStories">
+		          <div href="#" class="list-group-item header">User Stories <button class="btn btn-outline-white btn-small" id="newUserStory"><i class="fas fa-plus"></i> ADD</button></div>
+		        </div>
+					</div>
+					<div class="col-12 col-md-9 new" id="userStoryDetailView">
+						  <div class="container">
+						    <div class="row">
+						      <div class="col-12">
+						        <section class="form-simple">
+						          <div class="card">
+						            <div class="header pl-5 pt-3 grey lighten-2">
+						              <div class="row d-flex justify-content-start">
+						                <div class="md-form form-lg">
+						                  <input type="text" id="newUserStoryName" class="form-control form-control-lg">
+						                  <label for="newUserStoryName">User Story Name</label>
+						              </div>
+						              </div>
+						            </div>
+						            <div class="row ml-0 mr-0">
+						              <ul class="storyTabs d-flex justify-content-around">
+						                <li class="storyTabsItem activeTab">Journal</li>
+						                <li class="storyTabsItem">Details</li>
+						                <li class="storyTabsItem">Attachments</li>
+						                <li class="storyTabsItem">History</li>
+						              </ul>
+						            </div>
+						            <div class="card-body mx-4 mt-4">
+
+						              <div class="row">
+						                <div class="col-12 col-md-5">
+						                  <div class="md-form">
+						                    <input type="text" id="Form-email4" class="form-control" placeholder="Persona 1, Persona 2">
+						                    <label for="Form-email4">Who?</label>
+						                  </div>
+						                  <div class="md-form">
+						                    <textarea type="text" id="textareaBasic" class="form-control md-textarea" rows="2"></textarea>
+						                    <label for="textareaBasic">What?</label>
+						                  </div>
+						                  <div class="md-form">
+						                    <textarea type="text" id="textareaBasic" class="form-control md-textarea" rows="2"></textarea>
+						                    <label for="textareaBasic">When?</label>
+						                  </div>
+						                  <div class="md-form pb-3">
+						                    <textarea type="text" id="textareaBasic" class="form-control md-textarea" rows="2"></textarea>
+						                    <label for="textareaBasic">Why?</label>
+						                  </div>
+						                </div>
+						                <div class="col-12 col-md-7">
+						                  <div class="form-section">
+						                    <p class="lead">Where?</p>
+						                    <form class="form-inline md-form form-sm">
+						                      <i class="fas fa-plus" aria-hidden="true"></i>
+						                      <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Link an Epic" aria-label="Search">
+						                    </form>
+						                    <form class="form-inline md-form form-sm">
+						                      <i class="fas fa-plus" aria-hidden="true"></i>
+						                      <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Link a components" aria-label="Search">
+						                    </form>
+
+						                  </div>
+						                  <div class="form-section">
+						                    <p class="lead">How?</p>
+						                    <table class="table table-responsive">
+						                        <thead class="mdb-color darken-3">
+						                            <tr class="text-white">
+						                                <th>#</th>
+						                                <th>Task</th>
+						                                <th>Assignee</th>
+						                                <th>Status</th>
+						                                <th></th>
+						                            </tr>
+						                        </thead>
+						                        <tbody>
+
+
+
+						                            <tr>
+						                                <th scope="row"></th>
+						                                <td></td>
+						                                <td></td>
+						                                <td></td>
+						                                <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">+ Add Task</button></td>
+						                            </tr>
+						                        </tbody>
+						                    </table>
+						                  </div>
+						                </div>
+						              <div class="text-center mb-4">
+						                <button type="button" class="btn brand-main btn-block btn-large z-depth-2" id="newEpicCreate">Save</button>
+						              </div>
+						            </div>
+						          </div>
+						        </section>
+						      </div>
+						    </div>
+						  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$("#newUserStory").on('click', function() {
+			event.preventDefault();
+			$("#userStoryDetailView.new").show();
+		});
+	});
+	// $(document).ready(function initApp() {
+  //   // Listening for auth state changes.
+  //   // [START authstatelistener]
+	//
+  //   firebase.auth().onAuthStateChanged(function(user) {
+  //     // [START_EXCLUDE silent]
+	//
+  //     // [END_EXCLUDE]
+  //     if (user) {
+  //       var database = firebase.database();
+  //       var uid = user.uid;
+	// 			var selectedProject = $.cookie("ujapid");
+	// 			var selectedEpic = $.cookie("ujaeid");
+	// 			var epicRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject + "/epics/" + selectedEpic);
+	// 			return epicRef.once('value').then(function(snapshot) {
+	// 				var epicName = (snapshot.val().EpicName);
+	// 				var epicDescription = (snapshot.val().epicDescription);
+	// 				$("#epicTitle").replaceWith(epicName);
+	// 			})
+	// 		}
+	// 	})
+	// });
+
+</script>

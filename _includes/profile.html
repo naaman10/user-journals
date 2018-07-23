@@ -1,0 +1,156 @@
+<section class="my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card card-personal">
+				<form class="dropzone" id="addUserImage">
+					<i class="fas fa-plus"></i>
+					<p>Drag and drop of click to add image (recommended 300x300px)</p>
+				</form>
+
+        <div class="card-body">
+					<div class="md-form mb-5">
+	          <input type="text" id="displayName" class="form-control">
+	          <label for="displayName">Name</label>
+	        </div>
+					<div class="md-form mb-5">
+	          <input type="text" id="userEmail" class="form-control">
+	          <label for="userEmail">Email</label>
+	        </div>
+          <p class="card-meta">Joined on <span id="creationTime"></span></p>
+					<button class="btn btn-primary" id="updateProfile">Update</button>
+        </div>
+      </div>
+    </div>
+	</div>
+</section>
+
+<!-- Modals -->
+<div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="fileUpload" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body mx-3">
+				<form>
+				  <div class="form-group">
+				    <label for="fileUploadInput">Upload from your computer</label>
+				    <input type="file" class="form-control-file" id="fileUploadInput">
+						<input type="submit" id="fileUploadSubmit" name="Upload" class="btn btn-primary">
+				  </div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+    function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        // [START_EXCLUDE silent]
+        // [END_EXCLUDE]
+        if (user) {
+          // User is signed in.
+					var user = firebase.auth().currentUser;
+					var displayName = user.displayName;
+          var email = user.email;
+          var photoURL = user.photoURL;
+          var uid = user.uid;
+          var providerData = user.providerData;
+					var creationTimeFull = user.metadata.creationTime;
+
+          // [START_EXCLUDE]
+					$("#creationTime").text(creationTimeFull);
+					$("#userEmail").val(email).siblings('label').addClass('active');
+					if (displayName > "") {
+						$("#displayName").val(displayName).siblings('label').addClass('active');
+						$("#displayName").siblings('label').addClass('active');
+					} else {
+						$("#displayName").append('<div class="md-form mb-5"><input type="text" id="displayNameInput" class="form-control"><label for="displayNameInput">Add Your Name</label><div class="input-group-append"></div></div>');
+						$("#displayNameInput").click(function(event) {
+							$(this).siblings('#inputSave').show('fast');
+						});
+					}
+					$("#updateProfile").on('click', function() {
+						var user = firebase.auth().currentUser;
+						var displayName = $("#displayName input").val();
+						var email = $("#userEmail").val();
+						user.updateProfile({
+						  displayName: displayName,
+							email: email
+						}).then(function() {
+							Command: toastr["success"]("", "Profile Updated", {
+                "positionClass": "toast-bottom-left"
+						}).catch(function(error) {
+						  // An error happened.
+						})
+					})
+				});
+				$("#fileUploadSubmit").on('click', function(fileInput) {
+					event.preventDefault();
+					var user = firebase.auth().currentUser;
+					var uid = user.uid;
+					// Create a root reference
+					var storageRef = firebase.storage().ref();
+					// Create a reference to 'mountains.jpg'
+					// File or Blob named mountains.jpg
+					var file = file.name;
+
+					// Upload file and metadata to the object 'images/mountains.jpg'
+					var uploadTask = storageRef.child(uid + '-' + file.name).put(file);
+
+					// Listen for state changes, errors, and completion of the upload.
+					uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+					  function(snapshot) {
+					    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					    console.log('Upload is ' + progress + '% done');
+					    switch (snapshot.state) {
+					      case firebase.storage.TaskState.PAUSED: // or 'paused'
+					        console.log('Upload is paused');
+					        break;
+					      case firebase.storage.TaskState.RUNNING: // or 'running'
+					        console.log('Upload is running');
+					        break;
+					    }
+					  }, function(error) {
+
+					  // A full list of error codes is available at
+					  // https://firebase.google.com/docs/storage/web/handle-errors
+					  switch (error.code) {
+					    case 'storage/unauthorized':
+					      // User doesn't have permission to access the object
+					      break;
+
+					    case 'storage/canceled':
+					      // User canceled the upload
+					      break;
+
+					  }
+					}, function() {
+					  // Upload completed successfully, now we can get the download URL
+					  uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+					    console.log('File available at', downloadURL);
+					  });
+					});
+				});
+
+
+          // [END_EXCLUDE]
+        } else {
+          // User is signed out.
+          // [START_EXCLUDE]
+
+          // [END_EXCLUDE]
+        }
+        // [START_EXCLUDE silent]
+
+        // [END_EXCLUDE]
+      });
+      // [END authstatelistener]
+
+    }
+    window.onload = function() {
+      initApp();
+    };
+	</script>
+<!-- <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(29).jpg" alt="Card image cap"> -->

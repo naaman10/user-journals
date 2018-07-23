@@ -39,6 +39,7 @@
       firebase.initializeApp(config);
     </script>
 
+
     <nav class="navbar navbar-expand-lg fixed-top navbar-light double-nav">
     <a class="navbar-brand" href=""><img src="/img/logo-white.svg" width="60" height="60" alt="">User Journals</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +67,7 @@
                     <a class="dropdown-item waves-effect waves-light" href="/projects">Projects</a>
                     <a class="dropdown-item waves-effect waves-light" href="#">My account</a>
                     <button class="dropdown-item waves-effect waves-light" id="headerSignOut">Log out</button>
+
                 </div>
             </li> -->
         </ul>
@@ -87,8 +89,17 @@
 					<div class="card">
 
 						<div class="card-body">
-
+							<div id="siginOutForm">
+								<div class="text-center">
+									<img src="/img/anonUser.svg" width="100" height="100">
+									<h3 class="dark-grey-text mb-1"><strong>Welcome</strong></h3>
+									<p class="dark-grey-text mb-3" id="userEmail"></p>
+									<a href="/projects" class="btn btn-outline-primary btn-block mb-2">View Projects</a>
+									<a href="/profile" class="btn btn-outline-primary btn-block mb-2">Your Profile</a>
+								</div>
+							</div>
 							<!--Header-->
+							<div id="siginInForm">
 							<div class="text-center">
 								<img src="/img/dev-logo.svg" width="100" height="100">
 								<h3 class="dark-grey-text mb-5"><strong>Sign in</strong></h3>
@@ -122,13 +133,14 @@
 							    <span aria-hidden="true">&times;</span>
 							  </button>
 							</div>
+						</div>
 							<div class="text-center mb-3">
 								<button disabled class="btn brand-main btn-block btn-rounded z-depth-1a" id="quickstart-sign-in" name="signin">Sign In</button>
 							</div>
 						</div>
 
 						<!--Footer-->
-						<div class="modal-footer mx-5 pt-3 mb-1">
+						<div class="modal-footer mx-5 pt-3 mb-1" id="siginFooter">
 							<p class="font-small grey-text d-flex justify-content-end">Not a member? <a class="blue-text ml-1" id="quickstart-sign-up" name="signup">Sign Up</a></p>
 						</div>
 
@@ -141,14 +153,6 @@
 
 <button class="mdl-button mdl-js-button mdl-button--raised" disabled id="quickstart-verify-email" name="verify-email">Send Email Verification</button>
 
-
-
-<!-- Container where we'll display the user details -->
-<div class="quickstart-user-details-container">
-	Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
-	<div>Firebase auth <code>currentUser</code> object value:</div>
-	<pre><code id="quickstart-account-details">null</code></pre>
-</div>
 
 <script>
 function toggleSignIn() {
@@ -276,10 +280,10 @@ function toggleSignIn() {
           var uid = user.uid;
           var providerData = user.providerData;
           // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-					
+					$("#siginInForm").hide('slow');
+					$("#siginFooter").hide('slow');
+					$("#siginOutForm").show('slow');
+					$("#userEmail").append(email);
           console.log(uid);
           if (!emailVerified) {
             document.getElementById('quickstart-verify-email').disabled = false;
@@ -288,9 +292,10 @@ function toggleSignIn() {
         } else {
           // User is signed out.
           // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
           document.getElementById('quickstart-sign-in').textContent = 'Sign in';
-          document.getElementById('quickstart-account-details').textContent = 'null';
+					$("#siginInForm").show('slow');
+					$("#siginFooter").show('slow');
+					$("#siginOutForm").hide('slow');
           // [END_EXCLUDE]
         }
         // [START_EXCLUDE silent]
@@ -310,12 +315,6 @@ function toggleSignIn() {
 
 
 
-
-
-
-
-
-
     <section id="footer">
 	<div class="container">
 		<div class="row">
@@ -329,8 +328,9 @@ function toggleSignIn() {
 
     <script src="/scripts/jquery.cookie.js"></script>
       <script src="/scripts/toastr.js"></script>
+    <script src="/scripts/dropzone.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="/scripts/scripts.js"></script>
+    <script defer src="/scripts/scripts.js"></script>
     <script src='/scripts/nprogress.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
