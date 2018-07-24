@@ -250,8 +250,8 @@
 						            <div class="header pl-5 pt-3 grey lighten-2">
 						              <div class="row d-flex justify-content-start">
 						                <div class="md-form form-lg">
-						                  <input type="text" id="newUserStoryName" class="form-control form-control-lg">
-						                  <label for="newUserStoryName">User Story Name</label>
+						                  <input type="text" id="userStoryName" class="form-control form-control-lg">
+						                  <label for="userStoryName">User Story Name</label>
 						              </div>
 						              </div>
 						            </div>
@@ -268,20 +268,20 @@
 						              <div class="row">
 						                <div class="col-12 col-md-5">
 						                  <div class="md-form">
-						                    <input type="text" id="Form-email4" class="form-control" placeholder="Persona 1, Persona 2">
-						                    <label for="Form-email4">Who?</label>
+						                    <input type="text" id="userStoryWho" class="form-control" placeholder="Persona 1, Persona 2">
+						                    <label for="userStoryWho">Who?</label>
 						                  </div>
 						                  <div class="md-form">
-						                    <textarea type="text" id="textareaBasic" class="form-control md-textarea" rows="2"></textarea>
-						                    <label for="textareaBasic">What?</label>
+						                    <textarea type="text" id="userStoryWhat" class="form-control md-textarea" rows="2"></textarea>
+						                    <label for="userStoryWhat">What?</label>
 						                  </div>
 						                  <div class="md-form">
-						                    <textarea type="text" id="textareaBasic" class="form-control md-textarea" rows="2"></textarea>
-						                    <label for="textareaBasic">When?</label>
+						                    <textarea type="text" id="userStoryWhen" class="form-control md-textarea" rows="2"></textarea>
+						                    <label for="userStoryWhen">When?</label>
 						                  </div>
 						                  <div class="md-form pb-3">
-						                    <textarea type="text" id="textareaBasic" class="form-control md-textarea" rows="2"></textarea>
-						                    <label for="textareaBasic">Why?</label>
+						                    <textarea type="text" id="userStoryWhy" class="form-control md-textarea" rows="2"></textarea>
+						                    <label for="userStoryWhy">Why?</label>
 						                  </div>
 						                </div>
 						                <div class="col-12 col-md-7">
@@ -325,7 +325,7 @@
 						                  </div>
 						                </div>
 						              <div class="text-center mb-4">
-						                <button type="button" class="btn brand-main btn-block btn-large z-depth-2" id="newEpicCreate">Save</button>
+						                <button type="button" class="btn brand-main btn-block btn-large z-depth-2" id="newUserStoryCreate" onclick="createUserStory()">Save</button>
 						              </div>
 						            </div>
 						          </div>
@@ -347,28 +347,29 @@
 			$("#userStoryDetailView.new").show();
 		});
 	});
-	// $(document).ready(function initApp() {
-  //   // Listening for auth state changes.
-  //   // [START authstatelistener]
-	//
-  //   firebase.auth().onAuthStateChanged(function(user) {
-  //     // [START_EXCLUDE silent]
-	//
-  //     // [END_EXCLUDE]
-  //     if (user) {
-  //       var database = firebase.database();
-  //       var uid = user.uid;
-	// 			var selectedProject = $.cookie("ujapid");
-	// 			var selectedEpic = $.cookie("ujaeid");
-	// 			var epicRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject + "/epics/" + selectedEpic);
-	// 			return epicRef.once('value').then(function(snapshot) {
-	// 				var epicName = (snapshot.val().EpicName);
-	// 				var epicDescription = (snapshot.val().epicDescription);
-	// 				$("#epicTitle").replaceWith(epicName);
-	// 			})
-	// 		}
-	// 	})
-	// });
+	$(document).ready(function initApp() {
+    // Listening for auth state changes.
+    // [START authstatelistener]
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      // [START_EXCLUDE silent]
+
+      // [END_EXCLUDE]
+      if (user) {
+        var database = firebase.database();
+        var uid = user.uid;
+				var selectedProject = $.cookie("ujapid");
+				var selectedEpic = $.cookie("ujaeid");
+				var epicRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject + "/epics/" + selectedEpic + '/userstories/');
+				epicRef.on("child_added", function(data, prevChildKey) {
+          var userStories = data.val();
+          $("#showUserStories").append('<button id="userstoryButton" onclick="viewSavedUserStory(this)" data-userStoryId="' + data.key + '"  class="list-group-item list-group-item-action waves-effect" >' + userStories.userStoryName + '</button>');
+        }, function(error) {
+          console.log("Error: " + error.code);
+        })
+			}
+		})
+});
 
 </script>
 
@@ -459,6 +460,8 @@
         var selectedProject = $(identifier).data('projectid');
         var projectRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject);
         $.cookie("ujapid", selectedProject);
+        $(identifier).siblings('.list-group-item').removeClass('active');
+        $(identifier).addClass('active');
         return projectRef.once('value').then(function(snapshot) {
           var username = (snapshot.val());
           var projectName = (snapshot.val().ProjectName);

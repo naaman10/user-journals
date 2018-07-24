@@ -304,3 +304,71 @@ function viewPersona(identifier) {
         }
       })
   }
+function viewSavedUserStory(identifier) {
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        var database = firebase.database();
+        var uid = user.uid;
+        var projectRef = $.cookie('ujapid');
+        var epicRef = $.cookie('ujaeid')
+        var selectedUserStory = $(identifier).data('userstoryid');
+        $.cookie("ujausid", selectedUserStory);
+        $(identifier).siblings('.list-group-item').removeClass('active');
+        $(identifier).addClass('active');
+        var userStoryRef = firebase.database().ref('users/' + uid + '/projects/' + projectRef + '/epics/' + epicRef + '/userstories/' + selectedUserStory);
+        return userStoryRef.once('value').then(function(snapshot) {
+            var userStoryName = (snapshot.val().userStoryName);
+            var userStoryWhy = (snapshot.val().userStoryWhy);
+            var userStoryWhat = (snapshot.val().userStoryWhat);
+            // var personaDescription = (snapshot.val().epicDescription);
+            $("#userStoryName").val(userStoryName);
+            $("#userStoryName").siblings('label').addClass('active');
+            $("#userStoryWhy").val(userStoryWhy);
+            $("#userStoryWhy").siblings('label').addClass('active');
+            $("#userStoryWhat").val(userStoryWhat);
+            $("#userStoryWhat").siblings('label').addClass('active');
+            $("#userStoryDetailView.new").show();
+          })
+        }
+      })
+  }
+function createPersonaComponent() {
+  // watch for new & updates
+  // on new - add as option tag
+}
+
+function createUserStory() {
+  firebase.auth().onAuthStateChanged(function(user){
+    if (user){
+      var database = firebase.database();
+      var uid = user.uid;
+      var projectRef = $.cookie('ujapid');
+      var epicRef = $.cookie('ujaeid');
+      var userStoryName = $("#userStoryName").val();
+      var userStoryWho = $("#userStoryWho").val();
+      var userStoryWhat = $("#userStoryWhat").val();
+      var userStoryWhen = $("#userStoryWhen").val();
+      var userStoryWhy = $("#userStoryWhy").val();
+      var userStoryRef = firebase.database().ref('users/' + uid + '/projects/' + projectRef + '/epics/' + epicRef + '/userstories/');
+      var newUserStory = userStoryRef.push();
+      newUserStory.set({
+        userStoryName: userStoryName,
+        userStoryWho: userStoryWho,
+        userStoryWhat: userStoryWhat,
+        userStoryWhen: userStoryWhen,
+        userStoryWhy: userStoryWhy,
+        DateCreate: Date(),
+        DateClosed: ""
+      },function(error) {
+        if (error) {
+          Command: toastr["warning"]("Error code: " + error.code, "An error occurred ", {"positionClass": "toast-bottom-left"})
+        }
+        else {
+          Command: toastr["success"](" ", "User Story Created", {
+            "positionClass": "toast-bottom-left"
+          })
+      }
+    })
+  }
+})
+}
