@@ -240,6 +240,8 @@ layout: page
         var selectedProject = $(identifier).data('projectid');
         var projectRef = firebase.database().ref('users/' + uid + '/projects/' + selectedProject);
         $.cookie("ujapid", selectedProject);
+        $(identifier).siblings('.list-group-item').removeClass('active');
+        $(identifier).addClass('active');
         return projectRef.once('value').then(function(snapshot) {
           var username = (snapshot.val());
           var projectName = (snapshot.val().ProjectName);
